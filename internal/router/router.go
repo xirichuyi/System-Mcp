@@ -7,7 +7,6 @@ import (
 	"io"
 	"os"
 
-	"mcp-example/internal/storage"
 	"mcp-example/internal/tools"
 	"mcp-example/internal/types"
 )
@@ -31,12 +30,6 @@ func NewRouter(serverName, serverVersion string, dataStorage types.DataStorage, 
 		input:   os.Stdin,
 		output:  os.Stdout,
 	}
-}
-
-// SetIO 设置输入输出流（用于测试）
-func (r *Router) SetIO(input io.Reader, output io.Writer) {
-	r.input = input
-	r.output = output
 }
 
 // InitializeTools 初始化所有监控工具
@@ -152,79 +145,4 @@ func (r *Router) sendResponse(response *types.JSONRPCResponse) {
 	if _, err := fmt.Fprintln(r.output, string(respBytes)); err != nil {
 		// 发送失败，但不输出日志避免干扰 JSON-RPC
 	}
-}
-
-// ProcessSingleRequest 处理单个请求（用于测试）
-func (r *Router) ProcessSingleRequest(reqJSON string) (string, error) {
-	var req types.JSONRPCRequest
-	if err := json.Unmarshal([]byte(reqJSON), &req); err != nil {
-		return "", fmt.Errorf("解析请求失败: %v", err)
-	}
-
-	response := r.handler.HandleRequest(&req)
-	if response == nil {
-		return "", nil
-	}
-
-	respBytes, err := json.Marshal(response)
-	if err != nil {
-		return "", fmt.Errorf("序列化响应失败: %v", err)
-	}
-
-	return string(respBytes), nil
-}
-
-// SaveMonitorData 保存监控数据到存储
-func (r *Router) SaveMonitorData(key string, data interface{}) error {
-	if r.storage == nil {
-		return fmt.Errorf("存储未初始化")
-	}
-
-	return r.storage.Save(key, data)
-}
-
-// LoadMonitorData 从存储加载监控数据
-func (r *Router) LoadMonitorData(key string, data interface{}) error {
-	if r.storage == nil {
-		return fmt.Errorf("存储未初始化")
-	}
-
-	return r.storage.Load(key, data)
-}
-
-// GetCacheStats 获取缓存统计信息
-func (r *Router) GetCacheStats() map[string]interface{} {
-	stats := make(map[string]interface{})
-
-	if memCache, ok := r.cache.(*storage.MemoryCache); ok {
-		stats["size"] = memCache.Size()
-		stats["keys"] = memCache.Keys()
-	}
-
-	return stats
-}
-
-// GetStorageStats 获取存储统计信息
-func (r *Router) GetStorageStats() map[string]interface{} {
-	stats := make(map[string]interface{})
-
-	if jsonStorage, ok := r.storage.(*storage.JSONStorage); ok {
-		stats["data_dir"] = jsonStorage.GetDataDir()
-		if keys, err := jsonStorage.ListKeys(); err == nil {
-			stats["keys"] = keys
-			stats["count"] = len(keys)
-		}
-	}
-
-	return stats
-}
-
-// IsRunning 检查路由器是否正在运行
-func (r *Router) IsRunning() bool {
-	return r.running
-}
-
-// GetHandler 获取 MCP 处理器（用于测试）
-func (r *Router) GetHandler() *MCPHandler {
-	return r.handler
 }
