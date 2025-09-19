@@ -1,0 +1,7 @@
+{
+    "mcpServers": {
+        "system-monitor": {
+            "command": "system-monitor"
+        }
+    }
+}

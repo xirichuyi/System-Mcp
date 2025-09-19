@@ -1,0 +1,7 @@
+{
+    "mcpServers": {
+        "system-monitor": {
+            "command": "/Users/ml/Work/Go/Mcp/system-monitor"
+        }
+    }
+}

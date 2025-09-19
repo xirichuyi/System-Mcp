@@ -99,7 +99,11 @@ func parseFlags() *ServerConfig {
 
 	if *help {
 		fmt.Printf("系统监控 MCP 服务器 v%s\n\n", config.ServerVersion)
-		fmt.Println("用法:")
+		fmt.Println("💡 零配置启动：直接运行即可，无需任何参数！")
+		fmt.Println("\n用法:")
+		fmt.Printf("  %s                    # 使用默认配置启动\n", os.Args[0])
+		fmt.Printf("  %s --name my-monitor  # 自定义服务器名称\n\n", os.Args[0])
+		fmt.Println("可选参数:")
 		flag.PrintDefaults()
 		fmt.Println("\n支持的监控工具:")
 		fmt.Println("  • cpu_info      - CPU 使用率和详细信息")
