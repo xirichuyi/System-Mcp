@@ -1,0 +1,26 @@
+# 编译后的二进制文件
+system-monitor
+mcp-server
+
+# 数据文件
+data/*.json
+
+# 日志文件
+*.log
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# IDE 文件
+.vscode/
+.idea/
+
+# 临时文件
+*.tmp
+*.temp
+
+# Go 相关
+vendor/
+*.test
+*.prof
