@@ -1,0 +1,49 @@
+{
+    "server_name": "system-monitor-mcp",
+    "server_version": "1.0.0",
+    "data_dir": "data",
+    "config_dir": "configs",
+    "log_level": "info",
+    "cache_enabled": true,
+    "monitor_settings": {
+        "cpu_monitoring_interval": "1s",
+        "memory_monitoring_interval": "5s",
+        "process_monitoring_interval": "10s",
+        "network_monitoring_interval": "5s",
+        "disk_monitoring_interval": "30s",
+        "cache_duration": {
+            "cpu_info": "30s",
+            "memory_info": "15s",
+            "top_processes": "20s",
+            "network_stats": "10s",
+            "disk_info": "30s",
+            "system_overview": "60s"
+        }
+    },
+    "tools_config": {
+        "cpu_info": {
+            "enabled": true,
+            "default_duration": "1s"
+        },
+        "memory_info": {
+            "enabled": true
+        },
+        "top_processes": {
+            "enabled": true,
+            "default_sort": "memory",
+            "default_limit": 10
+        },
+        "network_stats": {
+            "enabled": true,
+            "show_connections": false
+        },
+        "disk_info": {
+            "enabled": true,
+            "show_all_partitions": false
+        },
+        "system_overview": {
+            "enabled": true,
+            "include_load": true
+        }
+    }
+}
